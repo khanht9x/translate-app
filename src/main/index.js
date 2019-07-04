@@ -61,4 +61,7 @@ autoUpdater.on('update-downloaded', () => {
 
 app.on('ready', () => {
   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
+  const log = require('electron-log')
+  log.transports.file.level = 'debug'
+  autoUpdater.logger = log
 })
