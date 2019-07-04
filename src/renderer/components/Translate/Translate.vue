@@ -32,7 +32,7 @@
     >Copy</b-button>
     </div>
     <div class="footer mt-3" style="float: right">
-      <small>version 1.0.1 by khanht</small>
+      <small>version 1.0.1 by</small>
     </div>
   </div>
 
