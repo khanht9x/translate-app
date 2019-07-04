@@ -8,7 +8,7 @@ export default new Router({
     {
       path: '/',
       name: 'translate',
-      component: require('@/components/Translate/Translate').default
+      component: require('@/components/Translate/Translate')
     },
     {
       path: '*',

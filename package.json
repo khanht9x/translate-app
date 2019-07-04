@@ -1,36 +1,41 @@
 {
-  "name": "electron_translate",
-  "version": "1.0.4",
-  "author": "khanht <khanh.t@citigo.com.vn>",
-  "description": "Translate App by khanht",
+  "name": "my-project",
+  "version": "1.0.5",
+  "author": "alon danoch 🐲 <alondanoch@hotmail.com>",
+  "description": "An electron-vue project",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/khanht9x/translate-app.git"
   },
-  "license": "1.0",
+  "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {
-    "build": "node .electron-vue/build.js && electron-builder",
-    "build:dir": "node .electron-vue/build.js && electron-builder --dir",
+    "release": "npm run build",
+    "build": "node .electron-vue/build.js && build",
+    "build:dir": "node .electron-vue/build.js && build --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
     "dev": "node .electron-vue/dev-runner.js",
-    "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src",
-    "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src",
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
-    "postinstall": "npm run lint:fix"
+    "postinstall": "electron-builder install-app-deps"
   },
   "build": {
-    "productName": "Translate App",
-    "appId": "com.example.yourapp",
+    "productName": "my-project",
+    "appId": "org.simulatedgreg.electron-vue",
+    "artifactName": "${productName}-setup-${version}.${ext}",
     "directories": {
       "output": "build"
     },
     "files": [
-      "dist/electron/**/*"
+      "dist/electron",
+      "node_modules/",
+      "package.json"
     ],
+    "publish": {
+      "provider": "github"
+    },
     "dmg": {
       "contents": [
         {
@@ -46,6 +51,10 @@
         }
       ]
     },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
     "mac": {
       "icon": "build/icons/icon.icns"
     },
@@ -59,59 +68,49 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.25",
-    "electron-log": "^3.0.6",
-    "electron-updater": "^4.0.14",
     "jquery": "^3.4.1",
-    "update-electron-app": "^1.4.2",
-    "vue": "^2.5.16",
+    "vue": "^2.3.3",
+    "axios": "^0.16.1",
     "vue-electron": "^1.0.6",
-    "vue-router": "^3.0.1"
+    "vue-router": "^2.5.3",
+    "vuex": "^2.3.1"
   },
   "devDependencies": {
-    "ajv": "^6.5.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "babili-webpack-plugin": "^0.1.2",
-    "cfonts": "^2.1.2",
-    "chalk": "^2.4.1",
-    "copy-webpack-plugin": "^4.5.1",
-    "cross-env": "^5.1.6",
-    "css-loader": "^0.28.11",
-    "del": "^3.0.0",
-    "devtron": "^1.4.0",
-    "electron": "^2.0.4",
-    "electron-debug": "^1.5.0",
-    "electron-devtools-installer": "^2.2.4",
-    "electron-builder": "^20.19.2",
-    "babel-eslint": "^8.2.3",
-    "eslint": "^4.19.1",
-    "eslint-friendly-formatter": "^4.0.1",
-    "eslint-loader": "^2.0.0",
-    "eslint-plugin-html": "^4.0.3",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "mini-css-extract-plugin": "0.4.0",
-    "file-loader": "^1.1.11",
-    "html-webpack-plugin": "^3.2.0",
+    "ajv": "^5.2.0",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-env": "^1.3.3",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.2.0",
+    "babili-webpack-plugin": "^0.1.1",
+    "cfonts": "^1.1.3",
+    "chalk": "^1.1.3",
+    "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^5.0.0",
+    "css-loader": "^0.28.4",
+    "del": "^2.2.1",
+    "devtron": "^1.1.0",
+    "electron": "^1.7.2",
+    "electron-builder": "^19.9.1",
+    "electron-debug": "^1.1.0",
+    "electron-devtools-installer": "^2.0.1",
+    "electron-log": "^2.2.6",
+    "electron-rebuild": "^1.1.3",
+    "electron-updater": "^2.4.3",
+    "extract-text-webpack-plugin": "^2.0.0-beta.4",
+    "file-loader": "^0.11.1",
+    "html-webpack-plugin": "^2.16.1",
+    "json-loader": "^0.5.4",
     "multispinner": "^0.2.1",
-    "node-loader": "^0.6.0",
-    "style-loader": "^0.21.0",
-    "url-loader": "^1.0.1",
-    "vue-html-loader": "^1.2.4",
-    "vue-loader": "^15.2.4",
-    "vue-style-loader": "^4.1.0",
-    "vue-template-compiler": "^2.5.16",
-    "webpack-cli": "^3.0.8",
-    "webpack": "^4.15.1",
-    "webpack-dev-server": "^3.1.4",
-    "webpack-hot-middleware": "^2.22.2",
-    "webpack-merge": "^4.1.3"
+    "style-loader": "^0.18.1",
+    "url-loader": "^0.5.7",
+    "vue-html-loader": "^1.2.2",
+    "vue-loader": "^12.2.1",
+    "vue-style-loader": "^3.0.1",
+    "vue-template-compiler": "^2.3.3",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0",
+    "webpack-hot-middleware": "^2.18.0"
   }
 }

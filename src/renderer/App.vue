@@ -5,11 +5,11 @@
 </template>
 
 <script>
-export default {
-  name: 'electron_transalte'
-}
+  export default {
+    name: 'my-project'
+  }
 </script>
 
 <style>
-@import "./assets/css/style.css";
+  @import "./assets/css/style.css";
 </style>
