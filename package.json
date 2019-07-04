@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "author": "khanht <khanh.t@citigo.com.vn>",
   "description": "Translate App by khanht",
+  "repository": "https://github.com/khanht9x/translate-app",
   "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {

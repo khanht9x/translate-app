@@ -6,6 +6,7 @@
  */
 
 /* eslint-disable */
+require('update-electron-app')()
 
 // Install `electron-debug` with `devtron`
 require('electron-debug')({ showDevTools: true })
