@@ -1,6 +1,13 @@
-'use strict'
+import { app, BrowserWindow, dialog } from 'electron'
 
-import { app, BrowserWindow } from 'electron'
+/**
+ * Auto Updater
+ *
+ * Uncomment the following code below and install `electron-updater` to
+ * support auto updating. Code Signing with a valid certificate is required.
+ * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
+ */
+
 import { autoUpdater } from 'electron-updater'
 
 /**
@@ -33,7 +40,7 @@ function createWindow () {
   })
 }
 
-app.on('ready', createWindow)
+// app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -47,21 +54,33 @@ app.on('activate', () => {
   }
 })
 
-/**
- * Auto Updater
- *
- * Uncomment the following code below and install `electron-updater` to
- * support auto updating. Code Signing with a valid certificate is required.
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
- */
+autoUpdater.logger = require('electron-log')
+autoUpdater.logger.transports.file.level = 'info'
 
 autoUpdater.on('update-downloaded', () => {
-  autoUpdater.quitAndInstall()
+  console.log('update-downloaded lats quitAndInstall')
+
+  if (process.env.NODE_ENV === 'production') {
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Found Updates',
+      message: 'Found updates, do you want update now?',
+      buttons: ['Sure', 'No']
+    }, (buttonIndex) => {
+      if (buttonIndex === 0) {
+        const isSilent = true
+        const isForceRunAfter = true
+        autoUpdater.quitAndInstall(isSilent, isForceRunAfter)
+      } else {
+        // autoUpdater.enabled = true
+        // autoUpdater = null
+      }
+    })
+  }
 })
 
 app.on('ready', () => {
-  if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
-  const log = require('electron-log')
-  log.transports.file.level = 'debug'
-  autoUpdater.logger = log
+  if (process.env.NODE_ENV === 'production') { autoUpdater.checkForUpdates() }
+  // autoUpdater.checkForUpdates();
+  createWindow()
 })
