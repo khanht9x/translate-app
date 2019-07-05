@@ -64,8 +64,10 @@
 </template>
 
 <script>
+import ApiService from "../../services/Api";
 import translateData from './config'
 const { clipboard } = require('electron')
+const config = require('electron-json-config');
 export default {
   name: 'translate',
   data () {
@@ -108,6 +110,18 @@ export default {
     copy () {
       clipboard.writeText(this.resultText)
     }
+  },
+  mounted () {
+    ApiService.get(
+      'https://api.myjson.com/bins/kexvz'
+    ).then(function (response) {
+      config.set('dataTranslate', response.data)
+    }).catch(function (error) {
+      console.log(error)
+    })
+
+    this.translateData = config.get('dataTranslate');
+
   }
 }
 </script>
