@@ -2,49 +2,60 @@
   <div id="wrapper">
     <b-container fluid>
       <h3>Translate</h3>
-      <b-row>
-		  
-	  </b-row>
-	  <b-col md="5">
-        <b-form-textarea
-          class="mt-3"
-          id="textarea"
-          v-model="inputText"
-          placeholder="Nhập từ cần dịch ..."
-          rows="3"
-          max-rows="6"
-        ></b-form-textarea>
-        <b-button
-          class="mt-3 mb-3"
-          @click="transalte"
-          variant="primary"
-        >Dịch</b-button>
-      </b-col>
-      <b-col md="5">
-        <b-form-textarea
-          id="textarea"
-          v-model="resultText"
-          placeholder="Kết quả ..."
-          rows="3"
-          max-rows="6"
-          :disabled=true
-          style="cursor: not-allowed"
-          oncopy="return false"
-        ></b-form-textarea>
-        <div>
-          <b-button
-            class="mt-3 mb-3"
-            @click="copy"
-            variant="danger"
-          >Copy</b-button>
-        </div>
-      </b-col>
+      <b-row class="mt-3">
+        <b-col
+          md="5"
+          class="mr-3"
+        >
+          <b-form-textarea
+            id="textarea"
+            v-model="inputText"
+            placeholder="Nhập từ cần dịch ..."
+            rows="8"
+            max-rows="8"
+            @input="transalte"
+          ></b-form-textarea>
+          <div style="text-align: center">
+            <b-button
+              class="mt-3 mb-3"
+              @click="clearInput"
+              variant="primary"
+            >Xóa</b-button>
+          </div>
+        </b-col>
+        <b-col md="5">
+          <b-form-textarea
+            id="textarea"
+            v-model="resultText"
+            placeholder="Kết quả ..."
+            rows="8"
+            max-rows="8"
+            :disabled=true
+            style="cursor: not-allowed"
+            oncopy="return false"
+          ></b-form-textarea>
+          <div>
+            <b-button
+              class="mt-3 mb-3 mr-2"
+              @click="copy"
+              variant="danger"
+            >Kết quả</b-button>
+            <b-button
+              class="mt-3 mb-3"
+              @click="clearResult"
+              variant="primary"
+            >Xóa</b-button>
+          </div>
+        </b-col>
+
+      </b-row>
 
       <div
         class="footer mt-3"
         style="float: right"
       >
-        <small>version 1.0.1</small>
+        <small style="display: block">Version 1.01</small>
+        <p><small>093.595.0000</small></p>
       </div>
     </b-container>
 
@@ -56,7 +67,7 @@
 import translateData from './config'
 const { clipboard } = require('electron')
 export default {
-  name: 'landing-page',
+  name: 'translate',
   data () {
     return {
       translateData: translateData,
@@ -65,6 +76,12 @@ export default {
     }
   },
   methods: {
+    clearInput () {
+      this.inputText = ""
+    },
+    clearResult () {
+      this.resultText = ""
+    },
     transalte () {
       this.resultText = ''
       const inputTexts = this.inputText.split('\n')
@@ -79,10 +96,12 @@ export default {
           number = ''
         }
 
+        console.log(JSON.stringify(text.replace(text.trim(), "")));
+
         const textTranslate = this.translateData[text.trim()] ? this.translateData[text.trim()] : text
         const numberTransalte = number.slice(number.search('_') + 1, number.length)
         if (textTranslate) {
-          this.resultText += textTranslate + ' ' + numberTransalte + '\n'
+          this.resultText += textTranslate + text.replace(text.trim(), "") + numberTransalte + '\n'
         } else {
           this.resultText += numberTransalte + '\n'
         }
