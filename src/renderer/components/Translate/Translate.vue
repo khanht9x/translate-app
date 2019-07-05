@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
     <b-container fluid>
-      <h3>Translate</h3>
+      <h3>YunXi Auto</h3>
       <b-row class="mt-3">
         <b-col
           md="5"
@@ -65,14 +65,14 @@
 
 <script>
 import ApiService from "../../services/Api";
-import translateData from './config'
+import Config from './config'
 const { clipboard } = require('electron')
-const config = require('electron-json-config');
+const jsonConfig = require('electron-json-config');
 export default {
   name: 'translate',
   data () {
     return {
-      translateData: translateData,
+      translateData: [],
       inputText: '',
       resultText: ''
     }
@@ -88,7 +88,7 @@ export default {
       this.resultText = ''
       const inputTexts = this.inputText.split('\n')
       inputTexts.map(inputText => {
-        const position = inputText.trim().search(/[0-9]/gm)
+        const position = inputText.trim().search(/\t[0-9]/gm)
         let text, number
         if (position !== -1) {
           text = inputText.slice(0, position)
@@ -113,15 +113,14 @@ export default {
   },
   mounted () {
     ApiService.get(
-      'https://api.myjson.com/bins/kexvz'
-    ).then(function (response) {
-      config.set('dataTranslate', response.data)
-    }).catch(function (error) {
+      Config.url
+    ).then(response => {
+      jsonConfig.set('dataTranslate', response.data)
+    }).catch(error => {
       console.log(error)
     })
 
-    this.translateData = config.get('dataTranslate');
-
+    this.translateData = jsonConfig.get('dataTranslate');
   }
 }
 </script>

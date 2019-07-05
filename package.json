@@ -1,8 +1,8 @@
 {
-  "name": "my-project",
+  "name": "yunxi-auto",
   "version": "1.0.5",
-  "author": "alon danoch 🐲 <alondanoch@hotmail.com>",
-  "description": "An electron-vue project",
+  "author": "yunxi",
+  "description": "Yunxi auto app",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/khanht9x/translate-app.git"
@@ -22,7 +22,7 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "build": {
-    "productName": "my-project",
+    "productName": "YunXi Auto",
     "appId": "org.simulatedgreg.electron-vue",
     "artifactName": "${productName}-setup-${version}.${ext}",
     "directories": {
