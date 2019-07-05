@@ -47,9 +47,7 @@
             >Xóa</b-button>
           </div>
         </b-col>
-
       </b-row>
-
       <div
         class="footer mt-3"
         style="float: right"
@@ -58,9 +56,7 @@
         <p><small>093.595.0000</small></p>
       </div>
     </b-container>
-
   </div>
-
 </template>
 
 <script>
