@@ -96,12 +96,10 @@ export default {
           number = ''
         }
 
-        console.log(JSON.stringify(text.replace(text.trim(), "")));
-
-        const textTranslate = this.translateData[text.trim()] ? this.translateData[text.trim()] : text
+        const textTranslate = this.translateData[text.trim()] ? this.translateData[text.trim()] : text.trim()
         const numberTransalte = number.slice(number.search('_') + 1, number.length)
         if (textTranslate) {
-          this.resultText += textTranslate + text.replace(text.trim(), "") + numberTransalte + '\n'
+          this.resultText += textTranslate + "\t" + numberTransalte + '\n'
         } else {
           this.resultText += numberTransalte + '\n'
         }
