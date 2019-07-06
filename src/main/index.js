@@ -63,9 +63,10 @@ autoUpdater.on('update-downloaded', () => {
   if (process.env.NODE_ENV === 'production') { 
     dialog.showMessageBox({
       type: 'info',
-      title: 'Found Updates',
-      message: 'Found updates, do you want update now?',
-      buttons: ['Sure', 'No']
+      title: 'Cập nhật',
+      message: process.platform === 'win32' ? releaseNotes : releaseName,
+      buttons: ['Đồng ý', 'Bỏ qua'],
+      detail: 'Một bản cập nhật đã được tải. Hãy khởi động lại phần mềm.'
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
         const isSilent = true;
