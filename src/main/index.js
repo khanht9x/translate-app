@@ -63,10 +63,10 @@ autoUpdater.on('update-downloaded', () => {
   if (process.env.NODE_ENV === 'production') { 
     dialog.showMessageBox({
       type: 'info',
-      title: 'Cập nhật',
+      buttons: ['Restart', 'Later'],
+      title: 'Application Update',
       message: process.platform === 'win32' ? releaseNotes : releaseName,
-      buttons: ['Đồng ý', 'Bỏ qua'],
-      detail: 'Một bản cập nhật đã được tải. Hãy khởi động lại phần mềm.'
+      detail: 'A new version has been downloaded. Restart the application to apply the updates.'
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
         const isSilent = true;
