@@ -27,7 +27,7 @@
           <b-form-textarea
             id="textarea"
             v-model="resultText"
-            placeholder="Kết quả ..."
+            placeholder="Kết quả ...."
             rows="8"
             max-rows="8"
             :disabled=true
