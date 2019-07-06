@@ -57,7 +57,7 @@ import { autoUpdater } from 'electron-updater'
 autoUpdater.logger = require("electron-log");
 autoUpdater.logger.transports.file.level = "info";
 
-autoUpdater.on('update-downloaded', () => {
+autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
   console.log('update-downloaded lats quitAndInstall');
 
   if (process.env.NODE_ENV === 'production') { 
