@@ -1,6 +1,6 @@
 {
   "name": "yunxi-auto",
-  "version": "1.0.5",
+  "version": "1.0.0",
   "author": "yunxi",
   "description": "Yunxi auto app",
   "repository": {
@@ -22,7 +22,7 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "build": {
-    "productName": "YunXi Auto",
+    "productName": "yunxi-auto",
     "appId": "org.simulatedgreg.electron-vue",
     "artifactName": "${productName}-setup-${version}.${ext}",
     "directories": {
