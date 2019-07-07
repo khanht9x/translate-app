@@ -84,7 +84,8 @@ export default {
       this.resultText = ''
       const inputTexts = this.inputText.split('\n')
       inputTexts.map(inputText => {
-        const position = inputText.trim().search(/[0-9]/gm)
+        console.log(JSON.stringify(inputText));
+        const position = inputText.trim().search(/\s[0-9]/gm)
         let text, number
         if (position !== -1) {
           text = inputText.slice(0, position)
@@ -94,9 +95,10 @@ export default {
           number = ''
         }
 
-        const textTranslate = this.translateData[text.trim()] ? this.translateData[text.trim()] : text.trim()
+        let textTranslate = this.translateData[text.trim()] ? this.translateData[text.trim()] : text.trim()
         const numberTransalte = number.slice(number.search('_') + 1, number.length)
         if (textTranslate) {
+          textTranslate = textTranslate.replace("柜体","");
           this.resultText += textTranslate + "\t" + numberTransalte + '\n'
         } else {
           this.resultText += numberTransalte + '\n'
