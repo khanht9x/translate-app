@@ -11,8 +11,8 @@
             id="textarea"
             v-model="inputText"
             placeholder="Nhập từ cần dịch ..."
-            rows="8"
-            max-rows="8"
+            rows="12"
+            max-rows="12"
             @input="transalte"
           ></b-form-textarea>
           <div style="text-align: center">
@@ -28,8 +28,8 @@
             id="textarea"
             v-model="resultText"
             placeholder="Kết quả ..."
-            rows="8"
-            max-rows="8"
+            rows="12"
+            max-rows="12"
             :disabled=true
             style="cursor: not-allowed"
             oncopy="return false"
