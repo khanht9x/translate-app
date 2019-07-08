@@ -11,8 +11,8 @@
             id="textarea"
             v-model="inputText"
             placeholder="Nhập từ cần dịch ..."
-            rows="12"
-            max-rows="12"
+            rows="15"
+            max-rows="15"
             @input="transalte"
           ></b-form-textarea>
           <div style="text-align: center">
@@ -28,8 +28,8 @@
             id="textarea"
             v-model="resultText"
             placeholder="Kết quả ..."
-            rows="12"
-            max-rows="12"
+            rows="15"
+            max-rows="15"
             :disabled=true
             style="cursor: not-allowed"
             oncopy="return false"
@@ -49,8 +49,8 @@
         </b-col>
       </b-row>
       <div
-        class="footer mt-3"
-        style="float: right"
+        class="footer"
+        style="float: right; position: relative; top: -55px;"
       >
         <small style="display: block">Version 1.01</small>
         <p><small>093.595.0000</small></p>
@@ -99,11 +99,17 @@ export default {
         const numberTransalte = number.slice(number.search('_') + 1, number.length)
         if (textTranslate) {
           textTranslate = textTranslate.replace("柜体","");
-          this.resultText += textTranslate + "\t" + numberTransalte + '\n'
+          this.resultText += textTranslate
+          if(numberTransalte){
+            this.resultText += "\t" + numberTransalte + '\n'
+          }else{
+            this.resultText += "\n"
+          }
         } else {
           this.resultText += numberTransalte + '\n'
         }
       })
+        this.resultText = this.resultText.trim();
     },
     copy () {
       clipboard.writeText(this.resultText)
