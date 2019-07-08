@@ -84,8 +84,7 @@ export default {
       this.resultText = ''
       const inputTexts = this.inputText.split('\n')
       inputTexts.map(inputText => {
-        console.log(JSON.stringify(inputText));
-        const position = inputText.trim().search(/\s[0-9]/gm)
+        const position = inputText.trim().search(/[0-9]/gm)
         let text, number
         if (position !== -1) {
           text = inputText.slice(0, position)
