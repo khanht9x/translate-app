@@ -67,8 +67,7 @@ export default {
     transalte() {
       this.resultText = "";
       // get array text with \n
-      const inputTexts = this.inputText.split("\n");
-
+      const inputTexts = this.inputText.replace("柜体", "").split("\n");
       inputTexts.map(inputText => {
         const position = inputText.trim().search(/[0-9]/gm);
         let text, number;
@@ -89,7 +88,6 @@ export default {
         );
 
         if (textTranslate) {
-          textTranslate = textTranslate.replace("柜体", "");
           this.resultText += textTranslate;
           if (numberTransalte) {
             if (number.search("_") !== -1) {
