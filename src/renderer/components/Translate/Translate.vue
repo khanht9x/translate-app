@@ -3,7 +3,10 @@
     <b-container fluid>
       <h3>YunXi Auto</h3>
       <b-row class="mt-3">
-        <b-col md="5" class="mr-3">
+        <b-col
+          md="5"
+          class="mr-3"
+        >
           <b-form-textarea
             id="textarea"
             v-model="inputText"
@@ -13,7 +16,11 @@
             @input="transalte"
           ></b-form-textarea>
           <div style="text-align: center">
-            <b-button class="mt-3 mb-3" @click="clearInput" variant="primary">Xóa</b-button>
+            <b-button
+              class="mt-3 mb-3"
+              @click="clearInput"
+              variant="primary"
+            >Xóa</b-button>
           </div>
         </b-col>
         <b-col md="5">
@@ -28,12 +35,23 @@
             oncopy="return false"
           ></b-form-textarea>
           <div>
-            <b-button class="mt-3 mb-3 mr-2" @click="copy" variant="danger">Kết quả</b-button>
-            <b-button class="mt-3 mb-3" @click="clearResult" variant="primary">Xóa</b-button>
+            <b-button
+              class="mt-3 mb-3 mr-2"
+              @click="copy"
+              variant="danger"
+            >Kết quả</b-button>
+            <b-button
+              class="mt-3 mb-3"
+              @click="clearResult"
+              variant="primary"
+            >Xóa</b-button>
           </div>
         </b-col>
       </b-row>
-      <div class="footer" style="float: right; position: relative; top: -55px;">
+      <div
+        class="footer"
+        style="float: right; position: relative; top: -55px;"
+      >
         <small style="display: block">Version 1.01</small>
         <p>
           <small>093.595.0000</small>
@@ -47,10 +65,10 @@
 import ApiService from "../../services/Api";
 import Config from "./config";
 const { clipboard } = require("electron");
-const jsonConfig = require("electron-json-config");
+const storage = require('electron-json-storage');
 export default {
-  name: "translate",
-  data() {
+  name: "Translate",
+  data () {
     return {
       translateData: [],
       inputText: "",
@@ -58,13 +76,13 @@ export default {
     };
   },
   methods: {
-    clearInput() {
+    clearInput () {
       this.inputText = "";
     },
-    clearResult() {
+    clearResult () {
       this.resultText = "";
     },
-    transalte() {
+    transalte () {
       this.resultText = "";
       // get array text with \n
       const inputTexts = this.inputText.split("\n");
@@ -106,20 +124,25 @@ export default {
       });
       this.resultText = this.resultText.trim();
     },
-    copy() {
+    copy () {
       clipboard.writeText(this.resultText);
     }
   },
-  mounted() {
+  mounted () {
     ApiService.get(Config.url)
       .then(response => {
-        jsonConfig.set("dataTranslate", response.data);
+        storage.set("data-translate", response.data, function (error) {
+          if (error) throw error;
+        })
       })
       .catch(error => {
         console.log(error);
       });
 
-    this.translateData = jsonConfig.get("dataTranslate");
+    this.translateData = storage.get("data-translate", function (error, data) {
+      if (error) throw error;
+      console.log(data);
+    });
   }
 };
 </script>
