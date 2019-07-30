@@ -7,6 +7,7 @@
             class="text-center"
             style="font-size: 25px"
           >Đăng nhập</p>
+
           <b-form>
             <b-input-group class="mb-3">
               <b-form-input
@@ -25,7 +26,15 @@
                 placeholder="Mật khẩu"
               ></b-form-input>
             </b-input-group>
+            <div
+              style="color: red"
+              class="errors mb-3"
+              v-if="error"
+            >
+              {{ error }}
+            </div>
             <div class="text-center">
+
               <b-button
                 :disabled="waiting"
                 variant="success"
@@ -38,6 +47,7 @@
                   small
                 />
                 <span class="sr-only">Loading...</span></b-button>
+
             </div>
           </b-form>
         </b-col>
@@ -61,8 +71,29 @@ export default {
     };
   },
   methods: {
-    login () {
+    async login () {
+      if (!this.request.email) {
+        this.error = "Bạn chưa nhập email";
+        return;
+      }
 
+      if (!this.request.password) {
+        this.error = "Bạn chưa nhập mật khẩu";
+        return;
+      }
+
+      this.error = "";
+      this.waiting = true;
+      const response = await AuthService.login(this.request);
+      if (response == "success") {
+        this.waiting = false;
+        // router.push({
+        //   name: "Token"
+        // });
+      } else {
+        this.waiting = false;
+        this.error = 'Có lỗi xảy ra vui lòng liên hệ 093.595.0000';
+      }
     }
   }
 }
