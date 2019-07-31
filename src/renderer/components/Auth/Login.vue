@@ -1,55 +1,59 @@
 <template>
   <div id="wrapper">
     <b-container>
-      <b-row class="justify-content-center">
+      <b-row class="justify-content-center login">
         <b-col md="5">
-          <p
-            class="text-center"
-            style="font-size: 25px"
-          >Đăng nhập</p>
-
-          <b-form>
-            <b-input-group class="mb-3">
-              <b-form-input
-                type="email"
-                v-model="request.email"
-                require
-                autofocus
-                placeholder="Email"
-              ></b-form-input>
-            </b-input-group>
-            <b-input-group class="mb-3">
-              <b-form-input
-                type="password"
-                require
-                v-model="request.password"
-                placeholder="Mật khẩu"
-              ></b-form-input>
-            </b-input-group>
-            <div
-              style="color: red"
-              class="errors mb-3"
-              v-if="error"
+          <b-card-group deck>
+            <b-card
+              header="Đăng Nhập"
+              class="text-center"
             >
-              {{ error }}
-            </div>
-            <div class="text-center">
+              <b-card-text>
+                <b-form>
+                  <b-input-group class="mb-3">
+                    <b-form-input
+                      type="email"
+                      v-model="request.email"
+                      require
+                      autofocus
+                      placeholder="Email"
+                    ></b-form-input>
+                  </b-input-group>
+                  <b-input-group class="mb-3">
+                    <b-form-input
+                      type="password"
+                      require
+                      v-model="request.password"
+                      placeholder="Mật khẩu"
+                    ></b-form-input>
+                  </b-input-group>
+                  <div
+                    style="color: red"
+                    class="errors mb-3"
+                    v-if="error"
+                  >
+                    {{ error }}
+                  </div>
+                  <div class="text-center">
 
-              <b-button
-                :disabled="waiting"
-                variant="success"
-                class="text-center"
-                @click="login()"
-                @keyup.enter="login()"
-              >Đăng nhập
-                <b-spinner
-                  v-show="waiting"
-                  small
-                />
-                <span class="sr-only">Loading...</span></b-button>
-
-            </div>
-          </b-form>
+                    <b-button
+                      block
+                      :disabled="waiting"
+                      variant="success"
+                      class="text-center"
+                      @click="login()"
+                      @keyup.enter="login()"
+                    >Đăng nhập
+                      <b-spinner
+                        v-show="waiting"
+                        small
+                      />
+                      <span class="sr-only">Loading...</span></b-button>
+                  </div>
+                </b-form>
+              </b-card-text>
+            </b-card>
+          </b-card-group>
         </b-col>
       </b-row>
     </b-container>

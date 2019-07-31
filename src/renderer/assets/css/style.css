@@ -87,3 +87,18 @@ main > div {
   padding-right: 30px !important;
   padding-left: 30px !important;
 }
+
+.login {
+  margin-top: 50px;
+}
+
+.login input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
+}
+
+.login input.form-control:focus {
+  box-shadow: none;
+  border-bottom: 1px solid #6c757d;
+}
