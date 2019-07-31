@@ -1,6 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
+import helper from "../helper/helper";
 const storage = require("electron-json-storage");
+const si = require("systeminformation");
+const crypto = require("crypto");
 
 Vue.use(Router);
 const router = new Router({
@@ -19,6 +22,11 @@ const router = new Router({
       component: require("@/components/Auth/Login")
     },
     {
+      path: "/token",
+      name: "Token",
+      component: require("@/components/Token/Token")
+    },
+    {
       path: "*",
       redirect: "/"
     }
@@ -28,14 +36,37 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   // Check route require auth
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (typeof storage.get("auth-config") == "undefined") {
-      console.log(1);
-      next({
-        name: "Login"
-      });
-    } else {
-      next();
-    }
+    storage.has("auth-config", (error, hasKey) => {
+      if (hasKey) {
+        storage.get("auth-config", (error, data) => {
+          const authConfig = data;
+          if (!authConfig.user) {
+            next({
+              name: "Login"
+            });
+          } else {
+            if (!authConfig.token) {
+              next({
+                name: "Token"
+              });
+            } else {
+              const serialNum = helper.getSerinumDisk();
+              if (helper.hash(serialNum, authConfig.token) == authConfig.hashToken) {
+                next({
+                  name: "Translate"
+                });
+              } else {
+                next();
+              }
+            }
+          }
+        });
+      } else {
+        next({
+          name: "Login"
+        });
+      }
+    });
   } else {
     next();
   }

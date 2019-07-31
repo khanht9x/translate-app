@@ -60,6 +60,8 @@
   </div>
 </template>
 <script>
+const storage = require('electron-json-storage');
+const crypto = require('crypto');
 import { router } from "../../router";
 import { AuthService } from "../../services/Auth";
 export default {
@@ -89,16 +91,26 @@ export default {
       this.error = "";
       this.waiting = true;
       const response = await AuthService.login(this.request);
-      if (response == "success") {
+      if (response.status == "success") {
         this.waiting = false;
-        // router.push({
-        //   name: "Token"
-        // });
+        const authConfig = {
+          user: crypto.createHash('md5').update(JSON.stringify(response.data)).digest("hex")
+        };
+
+        storage.set("auth-config", authConfig, function (error) {
+          if (error) throw error;
+        })
+
+        router.push({
+          name: "Token"
+        });
       } else {
         this.waiting = false;
-        this.error = 'Có lỗi xảy ra vui lòng liên hệ 093.595.0000';
+        this.error = response.message;
       }
     }
+  },
+  mounted () {
   }
 }
 </script>

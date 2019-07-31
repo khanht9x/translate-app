@@ -13,6 +13,18 @@ const AuthService = {
     } catch (error) {
       return error;
     }
+  },
+  verifyToken: async function(request) {
+    const data = qs.stringify({
+      token: request.token
+    });
+
+    try {
+      const response = await ApiService.post(data, "token/verify");
+      return response.data;
+    } catch (error) {
+      return error;
+    }
   }
 };
 
