@@ -19,8 +19,8 @@
                       placeholder="Nhập mã code"
                     ></b-form-input>
                   </b-input-group>
+                  <p>{{ serialNum }}</p>
                   <div class="text-center">
-
                     <b-button
                       block
                       :disabled="waiting"
@@ -56,20 +56,23 @@ export default {
       request: {
         token: ""
       },
-      waiting: false
+      waiting: false,
+      serialNum: ""
     }
   },
   methods: {
     async verify () {
-      const seriNumDisk = helper.getSerinumDisk();
+      const serialNum = await helper.getSerialNum();
+      this.serialNum = serialNum;
       const authConfig = config.get('auth-config');
+      this.request.token = this.request.token.trim();
       this.request.user_id = authConfig.user.id;
-      this.request.infor = seriNumDisk;
+      this.request.infor = serialNum;
       this.waiting = true;
       const response = await AuthService.verifyToken(this.request);
       if (response.status == "success") {
         authConfig.token = response.data.value;
-        authConfig.hashToken = helper.hash(seriNumDisk, response.data.value);
+        authConfig.hashToken = helper.hash(serialNum, response.data.value);
         config.set("auth-config", authConfig);
       }
     }

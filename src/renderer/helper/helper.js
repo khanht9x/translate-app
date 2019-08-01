@@ -1,5 +1,5 @@
-var crypto = require("crypto");
 const si = require("systeminformation");
+var crypto = require("crypto");
 
 export default {
   hash: function(text, password) {
@@ -8,15 +8,9 @@ export default {
     mystr += mykey.update.final("hex");
     return mystr;
   },
-  getSerinumDisk: function() {
-    let serialNum = "";
-    si.diskLayout()
-      .then(diskInfo => {
-        serialNum = diskInfo[0].serialNum;
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    return serialNum;
+  getSerialNum: async function() {
+    const data = await si.diskLayout();
+    console.log(data);
+    return data;
   }
 };
