@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import helper from "../helper/helper";
-const config = require('electron-json-config');
+const config = require("electron-json-config");
 
 Vue.use(Router);
 const router = new Router({
@@ -52,11 +52,9 @@ router.beforeEach((to, from, next) => {
         } else {
           const serialNum = helper.getSerinumDisk()[0].serialNum;
           if (
-            helper.hash(serialNum, authConfig.token) == authConfig.hashToken
+            helper.hash(serialNum + authConfig.token) == authConfig.hashToken
           ) {
-            next({
-              name: "Translate"
-            });
+            next();
           } else {
             next({
               name: "Login"

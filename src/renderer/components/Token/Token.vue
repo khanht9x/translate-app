@@ -19,8 +19,10 @@
                       placeholder="Nhập mã code"
                     ></b-form-input>
                   </b-input-group>
-                  <p>{{ serialNum }}</p>
                   <div class="text-center">
+                    <p style="color: red">
+                      {{ error }}
+                    </p>
                     <b-button
                       block
                       :disabled="waiting"
@@ -48,6 +50,7 @@
 const config = require('electron-json-config');
 import helper from "../../helper/helper"
 import AuthService from "../../services/Auth"
+import { router } from "../../router";
 
 export default {
   name: "Token",
@@ -57,10 +60,12 @@ export default {
         token: ""
       },
       waiting: false,
+      error: ""
     }
   },
   methods: {
     async verify () {
+      this.error = "";
       const serialNum = await helper.getSerialNum()[0].serialNum;
       const authConfig = config.get('auth-config');
       this.request.token = this.request.token.trim();
@@ -69,9 +74,16 @@ export default {
       this.waiting = true;
       const response = await AuthService.verifyToken(this.request);
       if (response.status == "success") {
+        this.waiting = false;
         authConfig.token = response.data.value;
-        authConfig.hashToken = helper.hash(serialNum, response.data.value);
+        authConfig.hashToken = helper.hash(serialNum + response.data.value);
         config.set("auth-config", authConfig);
+        router.push({
+          name: "Translate"
+        });
+      } else {
+        this.waiting = false;
+        this.error = response.message;
       }
     }
   }

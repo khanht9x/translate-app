@@ -97,7 +97,7 @@ export default {
         const authConfig = {
           user: {
             id: response.data.id,
-            hash: crypto.createHash('md5').update(JSON.stringify(response.data)).digest("hex")
+            hash: helper.hash(JSON.stringify(response.data))
           }
         };
 

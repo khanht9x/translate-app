@@ -64,8 +64,8 @@
 <script>
 const config = require('electron-json-config');
 const { clipboard } = require("electron");
-import ApiService from "../../services/Api";
-import Config from "./config";
+import ConfigService from "../../services/Config"
+import Config from "../../configs/config";
 export default {
   name: "Translate",
   data () {
@@ -126,15 +126,17 @@ export default {
       clipboard.writeText(this.resultText);
     }
   },
-  mounted () {
-    ApiService.get(Config.url)
-      .then(response => {
-        config.set("data-translate", response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
+  async mounted () {
+    const response = await ConfigService.get();
+    if (response.status == "success") {
+      if (response.data) {
+        const dataTranslate = JSON.parse(response.data.value).reduce((result, item) => {
+          result[item.key] = item.value;
+          return result;
+        }, {});
+        config.set("data-translate", JSON.parse(response.data.value));
+      }
+    }
     this.translateData = config.get("data-translate");
   }
 };
