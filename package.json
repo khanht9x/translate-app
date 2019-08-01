@@ -52,8 +52,7 @@
       ]
     },
     "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "oneClick": true
     },
     "mac": {
       "icon": "build/icons/icon.icns"
@@ -70,10 +69,7 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.27",
     "electron-json-config": "^1.5.3",
-    "getmac": "^1.4.6",
     "jquery": "^3.4.1",
-    "macaddress": "^0.2.9",
-    "md5-file": "^4.0.0",
     "qs": "^6.7.0",
     "systeminformation": "^4.14.4",
     "v-toaster": "^1.0.3",

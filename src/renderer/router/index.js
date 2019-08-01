@@ -50,7 +50,7 @@ router.beforeEach((to, from, next) => {
             name: "Token"
           });
         } else {
-          const serialNum = helper.getSerinumDisk();
+          const serialNum = helper.getSerinumDisk()[0].serialNum;
           if (
             helper.hash(serialNum, authConfig.token) == authConfig.hashToken
           ) {

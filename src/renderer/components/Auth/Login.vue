@@ -64,6 +64,7 @@ const config = require('electron-json-config');
 const crypto = require('crypto');
 import { router } from "../../router";
 import { AuthService } from "../../services/Auth";
+import helper from '../../helper/helper';
 export default {
   name: "Login",
   data () {
@@ -101,7 +102,6 @@ export default {
         };
 
         config.set("auth-config", authConfig);
-
         router.push({
           name: "Token"
         });
@@ -110,8 +110,6 @@ export default {
         this.error = response.message;
       }
     }
-  },
-  mounted () {
   }
 }
 </script>

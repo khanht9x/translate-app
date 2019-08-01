@@ -57,13 +57,11 @@ export default {
         token: ""
       },
       waiting: false,
-      serialNum: ""
     }
   },
   methods: {
     async verify () {
-      const serialNum = await helper.getSerialNum();
-      this.serialNum = serialNum;
+      const serialNum = await helper.getSerialNum()[0].serialNum;
       const authConfig = config.get('auth-config');
       this.request.token = this.request.token.trim();
       this.request.user_id = authConfig.user.id;
