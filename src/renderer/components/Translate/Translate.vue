@@ -62,10 +62,10 @@
 </template>
 
 <script>
+const config = require('electron-json-config');
+const { clipboard } = require("electron");
 import ApiService from "../../services/Api";
 import Config from "./config";
-const { clipboard } = require("electron");
-const storage = require('electron-json-storage');
 export default {
   name: "Translate",
   data () {
@@ -129,18 +129,13 @@ export default {
   mounted () {
     ApiService.get(Config.url)
       .then(response => {
-        storage.set("data-translate", response.data, function (error) {
-          if (error) throw error;
-        })
+        config.set("data-translate", response.data);
       })
       .catch(error => {
         console.log(error);
       });
 
-    this.translateData = storage.get("data-translate", function (error, data) {
-      if (error) throw error;
-      console.log(data);
-    });
+    this.translateData = config.get("data-translate");
   }
 };
 </script>

@@ -1,9 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import helper from "../helper/helper";
-const storage = require("electron-json-storage");
-const si = require("systeminformation");
-const crypto = require("crypto");
+const config = require('electron-json-config');
 
 Vue.use(Router);
 const router = new Router({
@@ -36,37 +34,37 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   // Check route require auth
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    storage.has("auth-config", (error, hasKey) => {
-      if (hasKey) {
-        storage.get("auth-config", (error, data) => {
-          const authConfig = data;
-          if (!authConfig.user) {
-            next({
-              name: "Login"
-            });
-          } else {
-            if (!authConfig.token) {
-              next({
-                name: "Token"
-              });
-            } else {
-              const serialNum = helper.getSerinumDisk();
-              if (helper.hash(serialNum, authConfig.token) == authConfig.hashToken) {
-                next({
-                  name: "Translate"
-                });
-              } else {
-                next();
-              }
-            }
-          }
-        });
-      } else {
+    const authConfig = config.get("auth-config");
+    if (typeof authConfig == "undefined") {
+      next({
+        name: "Login"
+      });
+    } else {
+      if (!authConfig.user) {
         next({
           name: "Login"
         });
+      } else {
+        if (typeof authConfig.token == "undefined") {
+          next({
+            name: "Token"
+          });
+        } else {
+          const serialNum = helper.getSerinumDisk();
+          if (
+            helper.hash(serialNum, authConfig.token) == authConfig.hashToken
+          ) {
+            next({
+              name: "Translate"
+            });
+          } else {
+            next({
+              name: "Login"
+            });
+          }
+        }
       }
-    });
+    }
   } else {
     next();
   }

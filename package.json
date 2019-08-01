@@ -66,11 +66,10 @@
     }
   },
   "dependencies": {
-    "axios": "^0.16.1",
+    "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.27",
-    "electron-json-storage": "^4.1.6",
-    "electron-store": "^4.0.0",
+    "electron-json-config": "^1.5.3",
     "jquery": "^3.4.1",
     "md5-file": "^4.0.0",
     "qs": "^6.7.0",

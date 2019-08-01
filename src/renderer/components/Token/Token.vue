@@ -45,7 +45,10 @@
   </div>
 </template>
 <script>
+const config = require('electron-json-config');
 import helper from "../../helper/helper"
+import AuthService from "../../services/Auth"
+
 export default {
   name: "Token",
   data () {
@@ -58,18 +61,16 @@ export default {
   },
   methods: {
     async verify () {
+      const seriNumDisk = helper.getSerinumDisk();
+      const authConfig = config.get('auth-config');
+      this.request.user_id = authConfig.user.id;
+      this.request.infor = seriNumDisk;
       this.waiting = true;
       const response = await AuthService.verifyToken(this.request);
       if (response.status == "success") {
-        storage.get("auth-config", (error, data) => {
-          data.token = response.data.value;
-          data.hashToken = helper.hash(helper.getSerinumDisk(), response.data.value);
-          storage.set("auth-config", data, error => {
-            router.push({
-              name: "Translate"
-            });
-          })
-        })
+        authConfig.token = response.data.value;
+        authConfig.hashToken = helper.hash(seriNumDisk, response.data.value);
+        config.set("auth-config", authConfig);
       }
     }
   }

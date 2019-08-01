@@ -60,7 +60,7 @@
   </div>
 </template>
 <script>
-const storage = require('electron-json-storage');
+const config = require('electron-json-config');
 const crypto = require('crypto');
 import { router } from "../../router";
 import { AuthService } from "../../services/Auth";
@@ -94,12 +94,13 @@ export default {
       if (response.status == "success") {
         this.waiting = false;
         const authConfig = {
-          user: crypto.createHash('md5').update(JSON.stringify(response.data)).digest("hex")
+          user: {
+            id: response.data.id,
+            hash: crypto.createHash('md5').update(JSON.stringify(response.data)).digest("hex")
+          }
         };
 
-        storage.set("auth-config", authConfig, function (error) {
-          if (error) throw error;
-        })
+        config.set("auth-config", authConfig);
 
         router.push({
           name: "Token"
