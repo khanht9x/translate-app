@@ -11,7 +11,6 @@ export default {
   },
   getSerialNum: async function() {
     const data = await si.diskLayout();
-    console.log(data);
     return data;
   }
 };
