@@ -1,3 +1,3 @@
 export default {
-    baseURL: "https://khanht.com/"
+    baseURL: "https://yunxiautos.com/"
 }
