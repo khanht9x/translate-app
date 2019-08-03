@@ -2,11 +2,8 @@
   <div id="wrapper">
     <b-container fluid>
       <h3>YunXi Auto</h3>
-      <b-row class="mt-3">
-        <b-col
-          md="5"
-          class="mr-3"
-        >
+      <b-row class="mt-3 token">
+        <b-col md="5" class="mr-3">
           <b-form-textarea
             id="textarea"
             v-model="inputText"
@@ -16,11 +13,7 @@
             @input="transalte"
           ></b-form-textarea>
           <div style="text-align: center">
-            <b-button
-              class="mt-3 mb-3"
-              @click="clearInput"
-              variant="primary"
-            >Xóa</b-button>
+            <b-button class="mt-3 mb-3" @click="clearInput" variant="primary">Xóa</b-button>
           </div>
         </b-col>
         <b-col md="5">
@@ -35,23 +28,12 @@
             oncopy="return false"
           ></b-form-textarea>
           <div>
-            <b-button
-              class="mt-3 mb-3 mr-2"
-              @click="copy"
-              variant="danger"
-            >Kết quả</b-button>
-            <b-button
-              class="mt-3 mb-3"
-              @click="clearResult"
-              variant="primary"
-            >Xóa</b-button>
+            <b-button class="mt-3 mb-3 mr-2" @click="copy" variant="danger">Kết quả</b-button>
+            <b-button class="mt-3 mb-3" @click="clearResult" variant="primary">Xóa</b-button>
           </div>
         </b-col>
       </b-row>
-      <div
-        class="footer"
-        style="float: right; position: relative; top: -55px;"
-      >
+      <div class="footer" style="float: right; position: relative; top: -55px;">
         <small style="display: block">Version 1.01</small>
         <p>
           <small>093.595.0000</small>
@@ -62,28 +44,27 @@
 </template>
 
 <script>
-const config = require('electron-json-config');
+const config = require("electron-json-config");
 const { clipboard } = require("electron");
-import ConfigService from "../../services/Config"
+import ConfigService from "../../services/Config";
 import Config from "../../configs/config";
 export default {
   name: "Translate",
-  data () {
+  data() {
     return {
       translateData: [],
       inputText: "",
-      resultText: "",
-      waiting: true
+      resultText: ""
     };
   },
   methods: {
-    clearInput () {
+    clearInput() {
       this.inputText = "";
     },
-    clearResult () {
+    clearResult() {
       this.resultText = "";
     },
-    transalte () {
+    transalte() {
       this.resultText = "";
       // get array text with \n
       const inputTexts = this.inputText.replace(/柜体/gm, "").split("\n");
@@ -123,20 +104,21 @@ export default {
       });
       this.resultText = this.resultText.trim();
     },
-    copy () {
+    copy() {
       clipboard.writeText(this.resultText);
     }
   },
-  async mounted () {
-    this.waiting = true;
+  async mounted() {
     const response = await ConfigService.get();
-    this.waiting = false;
     if (response.status == "success") {
       if (response.data) {
-        const dataTranslate = JSON.parse(response.data.value).reduce((result, item) => {
-          result[item.key] = item.value;
-          return result;
-        }, {});
+        const dataTranslate = JSON.parse(response.data.value).reduce(
+          (result, item) => {
+            result[item.key] = item.value;
+            return result;
+          },
+          {}
+        );
         config.set("data-translate", dataTranslate);
       }
     }

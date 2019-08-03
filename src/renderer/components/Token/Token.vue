@@ -74,7 +74,8 @@ export default {
 
       if (response.status == "success") {
         authConfig.token = response.data.value;
-        authConfig.hashToken = helper.md5(serialNum + response.data.value);
+        authConfig.serialNum = serialNum;
+        authConfig.hashToken = helper.md5(serialNum + response.data.value + "yunxiauto");
         config.set("auth-config", authConfig);
         router.push({
           name: "Translate"

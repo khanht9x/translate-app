@@ -33,8 +33,12 @@ const router = new Router({
 
 router.beforeEach(async (to, from, next) => {
   // Check route require auth
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
+
+
     const authConfig = config.get("auth-config");
+
     if (typeof authConfig == "undefined") {
       next({
         name: "Login"
@@ -50,10 +54,9 @@ router.beforeEach(async (to, from, next) => {
             name: "Token"
           });
         } else {
-          const disk = await helper.getDiskLayout();
-          const serialNum = disk[0].serialNum;
+          const serialNum = authConfig.serialNum;
           if (
-            helper.md5(serialNum + authConfig.token) == authConfig.hashToken
+            helper.md5(serialNum + authConfig.token + "yunxiauto") == authConfig.hashToken
           ) {
             next();
           } else {
