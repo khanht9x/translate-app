@@ -1,8 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import helper from "../helper/helper";
 const config = require('electron-json-config');
-import store from "../store/index";
 
 Vue.use(Router);
 const router = new Router({
@@ -34,12 +32,8 @@ const router = new Router({
 
 router.beforeEach(async (to, from, next) => {
   // Check route require auth
-
   if (to.matched.some(record => record.meta.requiresAuth)) {
-
-
     const authConfig = config.get("auth-config");
-
     if (typeof authConfig == "undefined") {
       next({
         name: "Login"
@@ -55,20 +49,7 @@ router.beforeEach(async (to, from, next) => {
             name: "Token"
           });
         } else {
-          const diskLayout = await helper.getDiskLayout();
-          store.state.Disk.done = true;
-          store.commit('Disk/setDone', true);
-          console.log(store.commit.Disk.done);
-          const serialNum = diskLayout[0].serialNum;
-          if (
-            helper.md5(serialNum + authConfig.token + "yunxiauto") == authConfig.hashToken
-          ) {
-            next();
-          } else {
-            next({
-              name: "Login"
-            });
-          }
+          next();
         }
       }
     }
