@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import helper from "../helper/helper";
 const config = require('electron-json-config');
+import store from "../store/index";
 
 Vue.use(Router);
 const router = new Router({
