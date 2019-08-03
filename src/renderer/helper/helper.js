@@ -9,7 +9,7 @@ export default {
       .digest("hex");
     return hash;
   },
-  getSerialNum: async function() {
+  getDiskLayout: async function() {
     const data = await si.diskLayout();
     return data;
   }

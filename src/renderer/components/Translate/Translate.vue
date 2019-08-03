@@ -72,7 +72,8 @@ export default {
     return {
       translateData: [],
       inputText: "",
-      resultText: ""
+      resultText: "",
+      waiting: true
     };
   },
   methods: {
@@ -127,14 +128,16 @@ export default {
     }
   },
   async mounted () {
+    this.waiting = true;
     const response = await ConfigService.get();
+    this.waiting = false;
     if (response.status == "success") {
       if (response.data) {
         const dataTranslate = JSON.parse(response.data.value).reduce((result, item) => {
           result[item.key] = item.value;
           return result;
         }, {});
-        config.set("data-translate", JSON.parse(response.data.value));
+        config.set("data-translate", dataTranslate);
       }
     }
     this.translateData = config.get("data-translate");

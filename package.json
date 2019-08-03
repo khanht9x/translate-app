@@ -23,7 +23,7 @@
   },
   "build": {
     "productName": "yunxi-auto",
-    "appId": "org.simulatedgreg.electron-vue",
+    "appId": "yunxi.translate",
     "artifactName": "${productName}-setup-${version}.${ext}",
     "directories": {
       "output": "build"
@@ -94,8 +94,8 @@
     "css-loader": "^0.28.4",
     "del": "^2.2.1",
     "devtron": "^1.1.0",
-    "electron": "^1.7.2",
-    "electron-builder": "^19.9.1",
+    "electron": "^2.0.4",
+    "electron-builder": "^20.19.2",
     "electron-debug": "^1.1.0",
     "electron-devtools-installer": "^2.0.1",
     "electron-log": "^2.2.6",
