@@ -11,19 +11,21 @@ const AuthService = {
       const response = await ApiService.post(data, "user/login");
       return response.data;
     } catch (error) {
-      return error;
+      console.log(error);
     }
   },
   verifyToken: async function(request) {
     const data = qs.stringify({
-      token: request.token
+      token: request.token,
+      user_id: request.user_id,
+      infor: request.infor
     });
 
     try {
       const response = await ApiService.post(data, "token/verify");
       return response.data;
     } catch (error) {
-      return error;
+      console.log(error);
     }
   }
 };

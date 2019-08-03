@@ -32,10 +32,14 @@ const router = new Router({
   ]
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // Check route require auth
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
+
+
     const authConfig = config.get("auth-config");
+
     if (typeof authConfig == "undefined") {
       next({
         name: "Login"
@@ -51,13 +55,15 @@ router.beforeEach((to, from, next) => {
             name: "Token"
           });
         } else {
-          const serialNum = helper.getSerinumDisk()[0].serialNum;
+          const diskLayout = await helper.getDiskLayout();
+          store.state.Disk.done = true;
+          store.commit('Disk/setDone', true);
+          console.log(store.commit.Disk.done);
+          const serialNum = diskLayout[0].serialNum;
           if (
-            helper.hash(serialNum, authConfig.token) == authConfig.hashToken
+            helper.md5(serialNum + authConfig.token + "yunxiauto") == authConfig.hashToken
           ) {
-            next({
-              name: "Translate"
-            });
+            next();
           } else {
             next({
               name: "Login"

@@ -2,15 +2,15 @@ const si = require("systeminformation");
 var crypto = require("crypto");
 
 export default {
-  hash: function(text, password) {
-    var mykey = crypto.createCipher("aes-128-cbc", password);
-    var mystr = mykey.update(text, "utf8", "hex");
-    mystr += mykey.update.final("hex");
-    return mystr;
+  md5: function(data) {
+    const hash = crypto
+      .createHash("md5")
+      .update(data)
+      .digest("hex");
+    return hash;
   },
-  getSerialNum: async function() {
+  getDiskLayout: async function() {
     const data = await si.diskLayout();
-    console.log(data);
     return data;
   }
 };

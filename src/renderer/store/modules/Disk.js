@@ -3,6 +3,9 @@ const state = {
 }
 
 const mutations = {
+    setDone (data) {
+        state.done = data;
+    }
 }
 
 const actions = {

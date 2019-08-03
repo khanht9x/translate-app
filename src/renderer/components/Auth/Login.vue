@@ -92,12 +92,12 @@ export default {
       this.error = "";
       this.waiting = true;
       const response = await AuthService.login(this.request);
+      this.waiting = false;
       if (response.status == "success") {
-        this.waiting = false;
         const authConfig = {
           user: {
             id: response.data.id,
-            hash: crypto.createHash('md5').update(JSON.stringify(response.data)).digest("hex")
+            hash: helper.md5(JSON.stringify(response.data))
           }
         };
 
@@ -106,7 +106,6 @@ export default {
           name: "Token"
         });
       } else {
-        this.waiting = false;
         this.error = response.message;
       }
     }
