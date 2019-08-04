@@ -136,7 +136,6 @@ export default {
       if (
         helper.md5(serialNum + authConfig.token + "yunxiauto") !== authConfig.hashToken
       ) {
-        config.deleteBulk(['auth-config']);
         router.push({
           name: "Login"
         });
