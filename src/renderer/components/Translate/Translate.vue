@@ -1,9 +1,6 @@
 <template>
   <div id="wrapper">
-    <b-container
-      fluid
-      v-show="!this.waiting"
-    >
+    <b-container fluid>
       <h3>YunXi Auto</h3>
       <b-row class="mt-3 token">
         <b-col
