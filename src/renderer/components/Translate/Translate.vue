@@ -1,6 +1,9 @@
 <template>
   <div id="wrapper">
-    <b-container fluid v-show="!this.waiting">
+    <b-container
+      fluid
+      v-show="!this.waiting"
+    >
       <h3>YunXi Auto</h3>
       <b-row class="mt-3 token">
         <b-col
@@ -135,18 +138,21 @@ export default {
       if (
         helper.md5(serialNum + authConfig.token + "yunxiauto") !== authConfig.hashToken
       ) {
+        config.deleteBulk(['auth-config']);
         route.push({
           name: "Login"
         });
       }
+
+      await this.verifyDisk(authConfig, serialNum);
     },
-    async verifyDisk(authConfig, serialNum) {
+    async verifyDisk (authConfig, serialNum) {
       this.request.user_id = authConfig.user.id;
       this.request.infor = serialNum;
       this.request.token = authConfig.token;
       const response = await AuthService.verifyToken(this.request)
-      if(response.status == 'error'){
-        
+      if (response.status == 'error') {
+        config.deleteBulk(['auth-config']);
         route.push({
           name: "Login"
         });
