@@ -148,7 +148,7 @@ export default {
       this.request.user_id = authConfig.user.id;
       this.request.infor = serialNum;
       this.request.token = authConfig.token;
-      const response = await AuthService.verifyToken(this.request)
+      const response = await AuthService.checkDisk(this.request)
       if (response.status == 'error') {
         config.deleteBulk(['auth-config']);
         router.push({
