@@ -137,7 +137,7 @@ export default {
         helper.md5(serialNum + authConfig.token + "yunxiauto") !== authConfig.hashToken
       ) {
         config.deleteBulk(['auth-config']);
-        route.push({
+        router.push({
           name: "Login"
         });
       }
@@ -151,7 +151,7 @@ export default {
       const response = await AuthService.verifyToken(this.request)
       if (response.status == 'error') {
         config.deleteBulk(['auth-config']);
-        route.push({
+        router.push({
           name: "Login"
         });
       }
