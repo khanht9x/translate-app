@@ -52,8 +52,7 @@
       ]
     },
     "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "oneClick": true
     },
     "mac": {
       "icon": "build/icons/icon.icns"
