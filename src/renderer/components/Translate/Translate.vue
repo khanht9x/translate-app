@@ -65,6 +65,7 @@
 const config = require("electron-json-config");
 const { clipboard } = require("electron");
 import ConfigService from "../../services/Config";
+import AuthService from "../../services/Auth"
 import Config from "../../configs/config";
 import helper from "../../helper/helper"
 export default {
@@ -73,7 +74,8 @@ export default {
     return {
       translateData: [],
       inputText: "",
-      resultText: ""
+      resultText: "",
+      request: {}
     };
   },
   methods: {
@@ -133,6 +135,18 @@ export default {
       if (
         helper.md5(serialNum + authConfig.token + "yunxiauto") !== authConfig.hashToken
       ) {
+        route.push({
+          name: "Login"
+        });
+      }
+    },
+    async verifyDisk(authConfig, serialNum) {
+      this.request.user_id = authConfig.user.id;
+      this.request.infor = serialNum;
+      this.request.token = authConfig.token;
+      const response = await AuthService.verifyToken(this.request)
+      if(response.status == 'error'){
+        
         route.push({
           name: "Login"
         });
