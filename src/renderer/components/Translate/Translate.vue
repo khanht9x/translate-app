@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper">
-    <b-container fluid v-show="!this.waiting">
+    <b-container fluid>
       <h3>YunXi Auto</h3>
       <b-row class="mt-3 token">
         <b-col
@@ -64,6 +64,7 @@
 <script>
 const config = require("electron-json-config");
 const { clipboard } = require("electron");
+import { router } from "../../router";
 import ConfigService from "../../services/Config";
 import Config from "../../configs/config";
 import helper from "../../helper/helper"
@@ -133,7 +134,8 @@ export default {
       if (
         helper.md5(serialNum + authConfig.token + "yunxiauto") !== authConfig.hashToken
       ) {
-        route.push({
+        config.purge()
+        router.push({
           name: "Login"
         });
       }
