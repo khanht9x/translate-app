@@ -27,6 +27,20 @@ const AuthService = {
     } catch (error) {
       console.log(error);
     }
+  },
+  checkDisk: async function(request) {
+    const data = qs.stringify({
+      token: request.token,
+      user_id: request.user_id,
+      infor: request.infor
+    });
+
+    try {
+      const response = await ApiService.post(data, "token/verify-disk");
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 
