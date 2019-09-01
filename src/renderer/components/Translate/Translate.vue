@@ -2,6 +2,16 @@
   <div id="wrapper">
     <b-container fluid>
       <h3>YunXi Auto</h3>
+      <b-row>
+        <b-col md="2" class="offset-md-8" style="padding-right: 0px !important">
+          <span>Ngôn ngữ</span>
+          <b-form-select
+            class="mt-2"
+            v-model="language"
+            :options="languageData"
+          ></b-form-select>
+        </b-col>
+      </b-row>
       <b-row class="mt-3 token">
         <b-col
           md="5"
@@ -49,8 +59,8 @@
         </b-col>
       </b-row>
       <div
-        class="footer"
-        style="float: right; position: relative; top: -55px;"
+        class="footer float-right"
+        style="position: relative; top: -55px;"
       >
         <small style="display: block">Version 1.01</small>
         <p>
@@ -73,6 +83,17 @@ export default {
   name: "Translate",
   data () {
     return {
+      language: 0,
+      languageData: [
+        {
+          value: 0,
+          text: "Hà Nội"
+        },
+        {
+          value: 1,
+          text: "Sài Gòn"
+        }
+      ],
       translateData: [],
       inputText: "",
       resultText: "",
