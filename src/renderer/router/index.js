@@ -9,9 +9,6 @@ const router = new Router({
       path: "/",
       name: "Translate",
       component: require("@/components/Translate/Translate"),
-      meta: {
-        requiresAuth: true
-      }
     },
     {
       path: "/login",

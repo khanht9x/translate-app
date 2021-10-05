@@ -74,11 +74,7 @@
 <script>
 const config = require("electron-json-config");
 const { clipboard } = require("electron");
-import { router } from "../../router";
 import ConfigService from "../../services/Config";
-import AuthService from "../../services/Auth"
-import Config from "../../configs/config";
-import helper from "../../helper/helper"
 export default {
   name: "Translate",
   data () {
@@ -150,35 +146,35 @@ export default {
     copy () {
       clipboard.writeText(this.resultText);
     },
-    async checkToken () {
-      const authConfig = config.get("auth-config");
-      const diskLayout = await helper.getDiskLayout();
-      const serialNum = diskLayout[0].serialNum;
-      if (
-        helper.md5(serialNum + authConfig.token + "yunxiauto") !== authConfig.hashToken
-      ) {
-        router.push({
-          name: "Login"
-        });
-      }
+    // async checkToken () {
+    //   const authConfig = config.get("auth-config");
+    //   const diskLayout = await helper.getDiskLayout();
+    //   const serialNum = diskLayout[0].serialNum;
+    //   if (
+    //     helper.md5(serialNum + authConfig.token + "yunxiauto") !== authConfig.hashToken
+    //   ) {
+    //     router.push({
+    //       name: "Login"
+    //     });
+    //   }
 
-      await this.verifyDisk(authConfig, serialNum);
-    },
-    async verifyDisk (authConfig, serialNum) {
-      this.request.user_id = authConfig.user.id;
-      this.request.infor = serialNum;
-      this.request.token = authConfig.token;
-      const response = await AuthService.checkDisk(this.request)
-      if (response.status == 'error') {
-        config.deleteBulk(['auth-config']);
-        router.push({
-          name: "Login"
-        });
-      }
-    }
+    //   await this.verifyDisk(authConfig, serialNum);
+    // },
+    // async verifyDisk (authConfig, serialNum) {
+    //   this.request.user_id = authConfig.user.id;
+    //   this.request.infor = serialNum;
+    //   this.request.token = authConfig.token;
+    //   const response = await AuthService.checkDisk(this.request)
+    //   if (response.status == 'error') {
+    //     config.deleteBulk(['auth-config']);
+    //     router.push({
+    //       name: "Login"
+    //     });
+    //   }
+    // }
   },
   async mounted () {
-    await this.checkToken();
+    // await this.checkToken();
     const response = await ConfigService.get();
     if (response.status == "success") {
       if (response.data) {
