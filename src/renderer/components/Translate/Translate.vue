@@ -74,7 +74,7 @@
 <script>
 const config = require("electron-json-config");
 const { clipboard } = require("electron");
-import ConfigService from "../../services/Config";
+import TranslateData from "../../configs/translate-data";
 export default {
   name: "Translate",
   data () {
@@ -175,20 +175,20 @@ export default {
   },
   async mounted () {
     // await this.checkToken();
-    const response = await ConfigService.get();
-    if (response.status == "success") {
-      if (response.data) {
-        const dataTranslate = JSON.parse(response.data.value).reduce(
-          (result, item) => {
-            result[item.key] = item.value;
-            return result;
-          },
-          {}
-        );
-        config.set("data-translate", dataTranslate);
-      }
-    }
-    this.translateData = config.get("data-translate");
+    // const response = await ConfigService.get();
+    // if (response.status == "success") {
+    //   if (response.data) {
+    //     const dataTranslate = JSON.parse(response.data.value).reduce(
+    //       (result, item) => {
+    //         result[item.key] = item.value;
+    //         return result;
+    //       },
+    //       {}
+    //     );
+    //     config.set("data-translate", dataTranslate);
+    //   }
+    // }
+    this.translateData = TranslateData
   }
 };
 </script>
