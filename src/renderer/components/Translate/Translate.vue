@@ -61,7 +61,9 @@
 
 <script>
 const { clipboard } = require("electron");
-import xlsx from "node-xlsx";
+console.log(process.versions.node)
+
+const ExcelJS = require('exceljs');
 const path = require("path");
 const fs = require("fs");
 
@@ -138,13 +140,18 @@ export default {
   },
   async mounted() {
     // File path.
-    const workSheetsFromFile = xlsx.parse(path.join(__static, "/dich.xlsx"));
-    const dataExcel = workSheetsFromFile[0].data;
-    dataExcel.forEach((item) => {
-      this.translateData[item[0]] = item[1]
-    });
-
+    // const workSheetsFromFile = xlsx.parse(path.join(__static, "/dich.xlsx"));
+    // const dataExcel = workSheetsFromFile[0].data;
+    // dataExcel.forEach((item) => {
+    //   this.translateData[item[0]] = item[1]
+    // });
+    const workbook = new ExcelJS.Workbook();
+    this.translateData = await workbook.xlsx.readFile(path.join(__static, "/dich.xlsx"));
     console.log(this.translateData)
+    var worksheet = workbook.getWorksheet('Sheet1');
+        worksheet.eachRow({ includeEmpty: true }, function(row, rowNumber) {
+          console.log("Row " + rowNumber + " = " + JSON.stringify(row.getCell(1).text) + JSON.stringify(row.getCell(2).text));
+        });
   },
 };
 </script>
