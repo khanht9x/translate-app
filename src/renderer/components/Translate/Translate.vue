@@ -146,8 +146,6 @@ export default {
       this.translateData[row.getCell(1).text] = 
         row.getCell(2).text
     });
-
-    console.log(this.translateData)
   },
 };
 </script>
