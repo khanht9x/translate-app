@@ -28,6 +28,15 @@
     "directories": {
       "output": "build"
     },
+    "extraResources": [
+      {
+        "from": "./static/",
+        "to": "extraResources",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
     "files": [
       "dist/electron",
       "node_modules/",
