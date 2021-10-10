@@ -140,7 +140,7 @@ export default {
   },
   async mounted() {
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile(path.join(__static, "/dich.xlsx"));
+    await workbook.xlsx.readFile(path.join(path.dirname(__dirname), '../../extraResources/dich.xlsx'));
     var worksheet = workbook.getWorksheet("Sheet1");
     worksheet.eachRow({ includeEmpty: true }, (row, rowNumber)  => {
       this.translateData[row.getCell(1).text] = 
