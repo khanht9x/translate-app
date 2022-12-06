@@ -70,7 +70,7 @@
     "bootstrap-vue": "^2.0.0-rc.27",
     "electron-json-config": "^1.5.3",
     "jquery": "^3.4.1",
-    "qs": "^6.7.0",
+    "qs": "^6.10.3",
     "systeminformation": "^4.14.4",
     "v-toaster": "^1.0.3",
     "vue": "^2.3.3",
